@@ -11,7 +11,7 @@ def get_json(hash_tag):
     r = urllib2.Request(url, '', { 'User-Agent' : "Mozilla/5.0 (X11; U; Linux i686) Gecko/20071127 Firefox/2.0.0.11" })
     twitter_json = urllib2.urlopen(r,timeout=1).readlines()[0]
     return json.decode(twitter_json)
-  except urllib2.HTTPError:
+  except Exception:
     import time
     time.sleep(10)
     return {'results':{}}
