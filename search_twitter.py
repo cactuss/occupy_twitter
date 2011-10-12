@@ -24,6 +24,7 @@ def search_by_hashtags(hash_tag_search):
     r = urllib2.Request(url, '', { 'User-Agent' : "Mozilla/5.0 (X11; U; Linux i686) Gecko/20071127 Firefox/2.0.0.11" })
     twitter_json = json.decode(urllib2.urlopen(r,timeout=1).readlines()[0])
     return twitter_json['statuses']
-  except urllib2.URLError:
+  except Exception:
+    print 'error'
     return {}
 
