@@ -4,6 +4,7 @@ CREATE TABLE  `ows`.`hash_tags` (
 `id` INT NOT NULL AUTO_INCREMENT ,
 `hash_tag` VARCHAR( 140 ) NOT NULL ,
 `count` INT NOT NULL ,
+`active` INT NOT NULL default '0',
 PRIMARY KEY (  `id` ) ,
 UNIQUE (
 `hash_tag`
@@ -35,3 +36,16 @@ def update_hash_tag(name, value):
     value = mysql_client.escape_string(str(value))
     query = "INSERT INTO `ows`.`hash_tags` (`id`, `hash_tag`, `count`) VALUES (NULL, '"+name+"', '"+value+"') on duplicate key update count=count+"+value+";"
     mysql_client.query(query)
+
+def get_all_hash_tags():
+  mysql_client.query('select * from hash_tags where hash_tags.active=0 order by count desc;')
+  rows_cursor = mysql_client.store_result()
+  query_result = []
+  while True:
+    foo = rows_cursor.fetch_row()
+    if foo:
+      query_result.append(foo[0][1])
+    else:
+      return query_result
+
+

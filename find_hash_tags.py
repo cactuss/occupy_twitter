@@ -9,7 +9,6 @@ import mysql_shit
 
 core_hash_tags = ['%23ows', '%23occupywallstreet','%23occupywallst']
 
-found_hash_tags = {} # key is hashtag value is count
 
 global_dict = {}
 global_dict['max_id'] = {}
@@ -22,6 +21,7 @@ def get_max_id(hash_tag):
   return max_id
 
 def run():
+  found_hash_tags = {} # key is hashtag value is count
   for hash_tag in core_hash_tags:
     twitter_data = search_twitter.get_json(hash_tag)
     max_id = get_max_id(hash_tag)
@@ -35,7 +35,9 @@ def run():
             found_hash_tags[match] = 0
           found_hash_tags[match] +=1
           global_dict['cnt'] +=1
-    global_dict['max_id'][hash_tag] = twitter_data['max_id']
+    if twitter_data.has_key('max_id'):
+      global_dict['max_id'][hash_tag] = twitter_data['max_id']
+
 
  
   for key in found_hash_tags.iterkeys():
