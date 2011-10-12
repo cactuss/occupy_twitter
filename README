@@ -1,0 +1,22 @@
+there are two main executables
+
+find_hash_tags.py and find_tweets.py
+
+i'm running ubuntu 11.04 with python and mysql setup
+your mysql login informatino needs to be defined in mysql_config.py
+rename mysql_config.py.bak to mysql_config.py and modify the obvious config parameters
+
+in the beginning of find_hash_tags is the sql schema necessary to start this service
+
+you basically want to run both find_hash_tags and find_tweets simultaneously
+
+find_hash_tags searches twitter for #ows, #occupywallst, and #occupywallstreet
+and finds 'co-occuring tags' in tweets with those three hashtags that starts with 'occupy'
+adds them to a hash_tags database in mysql
+
+find_tweets searches twitter for the hash tags in the mysql database and adds it to a flat file
+
+this flat log file is rotated and gzipped every half hour
+
+currently no work is undertaken to parse the flat file, that is the next immediate TODO
+however what is accomplished is archiving of tweets related to #ows
